@@ -65,13 +65,13 @@ Go back to your Lab 2 code and reload the county geometry and BMP cost data. Per
 Before mapping, **check and set the CRS**. Leaflet requires geographic coordinates (WGS 84, EPSG 4326). If your data are in a projected CRS, reproject now using `sf::st_transform(counties_bmp, 4326)`.
 
 ```{r task1_data, echo=TRUE, message=TRUE}
-counties <- sf::read_sf("../data/CBW/County_Boundaries.shp") %>%
+counties <- sf::read_sf("./data/CBW/County_Boundaries.shp") %>%
   sf::st_make_valid()
-dams <- sf::read_sf("../data/CBW/Dam_or_Other_Blockage_Removed_2012_2017.shp") %>% 
+dams <- sf::read_sf("./data/CBW/Dam_or_Other_Blockage_Removed_2012_2017.shp") %>% 
   sf::st_make_valid()
-streams <- sf::read_sf("../data/CBW/Streams_Opened_by_Dam_Removal_2012_2017.shp") %>% 
+streams <- sf::read_sf("./data/CBW/Streams_Opened_by_Dam_Removal_2012_2017.shp") %>% 
   sf::st_make_valid()
-bmps <- read_csv("../data/CBW/BMPreport2016_landbmps.csv")
+bmps <- read_csv("./data/CBW/BMPreport2016_landbmps.csv")
 
 counties <- st_transform(counties, 4326)
 dams     <- st_transform(dams, 4326)
@@ -224,9 +224,9 @@ In Lab 5, Task 5, you created an original map combining vector and raster data, 
 Reload the data you used in your original free-form map. Reproject all layers to WGS 84 (EPSG 4326). List the layers you are using in a comment.
 
 ```{r task3_data, echo=TRUE, message=TRUE}
-neoh <- st_read("../data/ohio/neoh_counties.gpkg")
+neoh <- st_read("./data/ohio/neoh_counties.gpkg")
 
-neohcsv <- read.csv("../data/ohio/oh_counties_DP2020.csv")
+neohcsv <- read.csv("./data/ohio/oh_counties_DP2020.csv")
 
 neoh_joined <- neoh %>% left_join(neohcsv, by = c("GEOIDFQ" = "geoid")) %>% mutate( percmin = (as.numeric(blackoraa) + as.numeric(amindianat) + as.numeric(asian) + as.numeric(nhawopacis) + as.numeric(other) + as.numeric(r2ormore)) /as.numeric(poptotal))
 
@@ -235,7 +235,7 @@ neoh_joined <- st_transform(neoh_joined, 4326)
 library(terra)
 library(raster) 
   
-dem <- rast("../data/static_mapping/neoh_dem.tif")
+dem <- rast("./data/static_mapping/neoh_dem.tif")
 dem_proj <- project(dem, st_crs(neoh)$wkt)
 dem_crop <- crop(dem_proj, vect(neoh))
 
